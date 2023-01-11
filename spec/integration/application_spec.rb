@@ -64,4 +64,15 @@ describe Application do
       expect(response_2.body).to include "Wild Nothing"
     end
   end
+
+  context "GET /albums" do
+    it "returns single album in html" do
+      response = get("/albums/1") #don't know if that /1 is correct or there's some dynamic thing
+      expect(response.status).to eq 200
+      expect(response.body).to include('<h1>Doolittle</h1>')
+    end
+  end
+
+
+
 end
