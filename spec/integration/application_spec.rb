@@ -26,15 +26,15 @@ describe Application do
 
   before(:each) { reset_artists_table }
 
-  context "GET /albums" do
-    it "returns a list of album titles" do
-      response = get("/albums")
-      expected_response =
-        "Doolittle, Surfer Rosa, Waterloo, Super Trouper, Bossanova, Lover, Folklore, I Put a Spell on You, Baltimore, Here Comes the Sun, Fodder on My Wings, Ring Ring"
-      expect(response.status).to eq 200
-      expect(response.body).to eq expected_response
-    end
-  end
+  # context "GET /albums" do
+  #   it "returns a list of album titles" do
+  #     response = get("/albums")
+  #     expected_response =
+  #       "Doolittle, Surfer Rosa, Waterloo, Super Trouper, Bossanova, Lover, Folklore, I Put a Spell on You, Baltimore, Here Comes the Sun, Fodder on My Wings, Ring Ring"
+  #     expect(response.status).to eq 200
+  #     expect(response.body).to eq expected_response
+  #   end
+  # end
 
   context "POST /albums" do
     it "creates a new album" do
@@ -67,12 +67,19 @@ describe Application do
 
   context "GET /albums" do
     it "returns single album in html" do
-      response = get("/albums/1") #don't know if that /1 is correct or there's some dynamic thing
+      response = get("/albums/1") 
       expect(response.status).to eq 200
       expect(response.body).to include('<h1>Doolittle</h1>')
     end
   end
 
-
-
+  context "GET /albums" do
+    it "returns a list of album titles" do
+      response = get("/albums")
+      expect(response.status).to eq 200
+      expect(response.body).to include '<div><br>Title: Doolittle<br>Release year: 1989<br></div>'
+    end
+  end
 end
+
+
