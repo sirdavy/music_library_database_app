@@ -47,11 +47,27 @@ describe Application do
     end
   end
 
+  # context "GET /artists" do
+  #   it "returns a list of artist names" do
+  #     response = get("/artists")
+  #     expected_response = "Pixies, ABBA, Taylor Swift, Nina Simone"
+  #     expect(response.body).to eq expected_response
+  #   end
+  # end
+
   context "GET /artists" do
-    it "returns a list of artist names" do
+    it "returns a list of artist names in html with links for each" do
       response = get("/artists")
-      expected_response = "Pixies, ABBA, Taylor Swift, Nina Simone"
-      expect(response.body).to eq expected_response
+      expect(response.body).to include '<div><br>Name: <a href="/artists/1"> Pixies</a><br>Genre: Rock<br></div>'
+    end
+  end
+
+
+  context "GET /albums" do
+    it "returns single album from its id in html" do
+      response = get("/albums/1") 
+      expect(response.status).to eq 200
+      expect(response.body).to include('<h1>Doolittle</h1>')
     end
   end
 
@@ -65,23 +81,33 @@ describe Application do
     end
   end
 
-  context "GET /albums" do
-    it "returns single album in html" do
-      response = get("/albums/1") 
+  context "GET /artists" do
+    it "returns single artist from its id in html" do
+      response = get("/artists/1") 
       expect(response.status).to eq 200
-      expect(response.body).to include('<h1>Doolittle</h1>')
+      expect(response.body).to include('Name: Pixies<br>')
     end
   end
 
+  #old test now obsolete
+  # context "GET /albums" do
+  #   it "returns a list of album titles" do
+  #     response = get("/albums")
+  #     expect(response.status).to eq 200
+  #     expect(response.body).to include '<div><br>Title: Doolittle<br>Release year: 1989<br></div>'
+  #     expect(response.body).to include '<div><br>Title: Ring Ring<br>Release year: 1973<br></div>'
+  #   end
+  # end
+
   context "GET /albums" do
-    it "returns a list of album titles" do
+    it "returns a list of album titles with links" do
       response = get("/albums")
       expect(response.status).to eq 200
-      expect(response.body).to include '<div><br>Title: Doolittle<br>Release year: 1989<br></div>'
-      expect(response.body).to include '<div><br>Title: Ring Ring<br>Release year: 1973<br></div>'
-
+      expect(response.body).to include '<div><br>Title: <a href="/albums/1"> Doolittle</a><br>Release year: 1989<br></div>'
+      expect(response.body).to include '<div><br>Title: <a href="/albums/12"> Ring Ring</a><br>Release year: 1973<br></div>'
     end
   end
+
 end
 
 
