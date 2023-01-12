@@ -78,6 +78,8 @@ describe Application do
       response = get("/albums")
       expect(response.status).to eq 200
       expect(response.body).to include '<div><br>Title: Doolittle<br>Release year: 1989<br></div>'
+      expect(response.body).to include '<div><br>Title: Ring Ring<br>Release year: 1973<br></div>'
+
     end
   end
 end

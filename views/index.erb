@@ -4,7 +4,7 @@
     <h1>Albums</h1>
 
     <% @albums.map do |album| %>
-    <div><br>Title: <%= album.title %><br>Release year: <%= album.release_year %><br></div>
+    <div><br>Title: <a href="/albums/<%=album.id%>"> <%= album.title %></a><br>Release year: <%= album.release_year %><br></div>
       <% end %>
     </div>
 
