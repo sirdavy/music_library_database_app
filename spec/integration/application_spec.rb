@@ -36,16 +36,17 @@ describe Application do
   #   end
   # end
 
-  context "POST /albums" do
-    it "creates a new album" do
-      response =
-        post("/albums", title: "Voyage", release_year: "2022", artist_id: "2")
-      expect(response.status).to eq 200
-      expect(response.body).to eq("")
-      response_2 = get("/albums")
-      expect(response_2.body).to include "Voyage"
-    end
-  end
+  # old test for posting albums without html
+  # context "POST /albums" do
+  #   it "creates a new album" do
+  #     response =
+  #       post("/albums", title: "Voyage", release_year: "2022", artist_id: "2")
+  #     expect(response.status).to eq 200
+  #     expect(response.body).to eq("")
+  #     response_2 = get("/albums")
+  #     expect(response_2.body).to include "Voyage"
+  #   end
+  # end
 
   # context "GET /artists" do
   #   it "returns a list of artist names" do
@@ -71,15 +72,16 @@ describe Application do
     end
   end
 
-  context "POST /artists" do
-    it "creates a new artist" do
-      response = post("/artists", name: "Wild Nothing", genre: "Indie")
-      expect(response.status).to eq 200
-      expect(response.body).to eq("")
-      response_2 = get("/artists")
-      expect(response_2.body).to include "Wild Nothing"
-    end
-  end
+  #obsolete test for non html form post artist
+  # context "POST /artists" do
+  #   it "creates a new artist" do
+  #     response = post("/artists", name: "Wild Nothing", genre: "Indie")
+  #     expect(response.status).to eq 200
+  #     expect(response.body).to eq("")
+  #     response_2 = get("/artists")
+  #     expect(response_2.body).to include "Wild Nothing"
+  #   end
+  # end
 
   context "GET /artists" do
     it "returns single artist from its id in html" do
@@ -107,6 +109,39 @@ describe Application do
       expect(response.body).to include '<div><br>Title: <a href="/albums/12"> Ring Ring</a><br>Release year: 1973<br></div>'
     end
   end
+
+  context "get /albums/new" do
+    it "returns the view with the html form" do
+      response = get("/albums/new")
+      expect(response.status).to eq 200
+      expect(response.body).to include '<form action="/albums" method="POST">'
+    end
+  end
+
+  context "post /albums" do
+    it "returns a new filled form" do
+      response = post("/albums", title: "Trompe le Monde", release_year: "1991", artist_id: "1")
+      expect(response.status).to eq 200
+      expect(response.body).to include('<h1>Your album has been added!</h1>')
+    end
+  end
+
+  context "get /artists/new" do
+    it "returns the view with the html form" do
+      response = get("/artists/new")
+      expect(response.status).to eq 200
+      expect(response.body).to include '<form action="/artists" method="POST">'
+    end
+  end
+
+  context "post /artists" do
+    it "returns a new filled form" do
+      response = post("/artists", name: "Little flat", genre: "Swamp Rock")
+      expect(response.status).to eq 200
+      expect(response.body).to include('<h1>Your artist has been added!</h1>')
+    end
+  end
+
 
 end
 
